@@ -42,19 +42,63 @@
       height: 40px;
       width: auto;
     }
-  </style>
-  <link rel="manifest" href="/SP-2025-eSIM/assets/manifest.json?v=3">
-  <meta name="theme-color" content="#0b3d91">
-  <link rel="icon" type="image/png" sizes="32x32" href="/SP-2025-eSIM/assets/icons/favicon-32.png?v=3">
-  <link rel="icon" type="image/png" sizes="16x16" href="/SP-2025-eSIM/assets/icons/favicon-16.png?v=3">
-  <link rel="apple-touch-icon" href="/SP-2025-eSIM/assets/icons/icon-192x192.png?v=3">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  
+/* --- Mobile table improvements: sticky provider column + horizontal scroll --- */
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:8px}
+.table-scroll table{border-collapse:separate;border-spacing:0;min-width:900px}
+@media (max-width: 768px){
+  .table-scroll table{min-width:1000px}
+}
+/* Sticky header */
+.table-scroll thead th{position:sticky;top:0;z-index:3}
+/* Sticky first column (Provider) */
+.table-scroll th:first-child,
+.table-scroll td:first-child{
+  position:sticky; left:0; z-index:2; background:#fff;
+  box-shadow: 2px 0 0 rgba(0,0,0,0.08);
+}
+.table-scroll thead th:first-child{z-index:4}
+
+</style>
+
+<style>
+#sw-update-toast{position:fixed;left:50%;transform:translateX(-50%);bottom:16px;
+background:#111;color:#fff;border-radius:10px;padding:10px 14px;display:none;
+box-shadow:0 6px 18px rgba(0,0,0,.25);z-index:9999;font:14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Arial;}
+#sw-update-toast button{margin-left:10px;border:0;border-radius:8px;padding:6px 10px;cursor:pointer}
+#sw-update-toast .btn-primary{background:#0b3d91;color:#fff}
+#sw-update-toast .btn-secondary{background:#444;color:#fff}
+
+/* --- Mobile table improvements: sticky provider column + horizontal scroll --- */
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:8px}
+.table-scroll table{border-collapse:separate;border-spacing:0;min-width:900px}
+@media (max-width: 768px){
+  .table-scroll table{min-width:1000px}
+}
+/* Sticky header */
+.table-scroll thead th{position:sticky;top:0;z-index:3}
+/* Sticky first column (Provider) */
+.table-scroll th:first-child,
+.table-scroll td:first-child{
+  position:sticky; left:0; z-index:2; background:#fff;
+  box-shadow: 2px 0 0 rgba(0,0,0,0.08);
+}
+.table-scroll thead th:first-child{z-index:4}
+
+</style>
+
 </head>
 <body>
+
+<div id="sw-update-toast" role="status" aria-live="polite">
+  <span>Update available.</span>
+  <button class="btn-secondary" id="sw-update-later">Later</button>
+  <button class="btn-primary" id="sw-update-now">Update now</button>
+</div>
+
   <h1>Japan eSIM Providers – Comparison Table</h1>
-  <table>
+  <div class="table-scroll">
+<table>
     <thead>
       <tr>
         <th>Provider</th>
@@ -84,7 +128,7 @@
         <td>82.6 ▼ 30.7 ▲ (5G where available)</td>
         <td>7-30 days 1-20GB</td>
         <td><strong>20GB / 30 days A$36.62</strong> – includes “Virtual Location” + “Ad blocker.”</td>
-        <td><a href="https://saily.com/esim-japan/site/?coupon=TOKYOCHEAPO10" target="_blank" rel="noopener">View offer</a></td>
+        <td><a href="https://saily.com/esim-japan/site/?coupon=TOKYOCHEAPO1010" target="_blank" rel="noopener">View offer</a></td>
       </tr>
       <tr>
         <td><img src="data:image/png;base64,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" alt="World eSIM" class="provider-logo"></td>
@@ -123,6 +167,7 @@
       </tr>
     </tbody>
   </table>
+</div>
   <p style="text-align:center; margin-top:20px;">
     Source: <a href="https://tokyocheapo.com/business/internet/esim-japan-travel/" target="_blank" rel="noopener">Tokyo Cheapo – Best Japan eSIMs</a>
   </p>
@@ -130,22 +175,49 @@
 <script>
 (function(){
   if(!('serviceWorker' in navigator)) return;
-  function showToast(){ var el=document.getElementById('sw-update-toast'); if(el) el.style.display='block'; }
-  function hideToast(){ var el=document.getElementById('sw-update-toast'); if(el) el.style.display='none'; }
+
+  function showToast(){
+    var el = document.getElementById('sw-update-toast');
+    if(el) el.style.display = 'block';
+  }
+  function hideToast(){
+    var el = document.getElementById('sw-update-toast');
+    if(el) el.style.display = 'none';
+  }
 
   window.addEventListener('load', function(){
-    navigator.serviceWorker.register('/SP-2025-eSIM/service-worker.js', { scope: '/SP-2025-eSIM/' }).then(function(reg){
+    navigator.serviceWorker.register('/SP-2025-eSIM/service-worker.js').then(function(reg){
+      // Keep registration fresh while visible
       document.addEventListener('visibilitychange', function(){ if(!document.hidden) reg.update(); });
+
+      // Prompt if a worker is already waiting
       if (reg.waiting) showToast();
+
+      // Show toast when a new worker installs
       reg.addEventListener('updatefound', function(){
-        var nw = reg.installing; if(!nw) return;
-        nw.addEventListener('statechange', function(){
-          if(nw.state==='installed' && navigator.serviceWorker.controller) showToast();
+        var newWorker = reg.installing;
+        if(!newWorker) return;
+        newWorker.addEventListener('statechange', function(){
+          if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+            showToast();
+          }
         });
       });
-      var btnNow=document.getElementById('sw-update-now'); if(btnNow) btnNow.addEventListener('click', function(){ if(reg.waiting) reg.waiting.postMessage({type:'SKIP_WAITING'}); });
-      var btnLater=document.getElementById('sw-update-later'); if(btnLater) btnLater.addEventListener('click', hideToast);
-      navigator.serviceWorker.addEventListener('controllerchange', function(){ window.location.reload(); });
+
+      // Buttons
+      var btnNow = document.getElementById('sw-update-now');
+      var btnLater = document.getElementById('sw-update-later');
+      if (btnNow) btnNow.addEventListener('click', function(){
+        if (reg.waiting) reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+      });
+      if (btnLater) btnLater.addEventListener('click', hideToast);
+
+      // Reload when the controller changes (new SW activates)
+      navigator.serviceWorker.addEventListener('controllerchange', function(){
+        window.location.reload();
+      });
+    }).catch(function(e){
+      console.error('SW registration failed:', e);
     });
   });
 })();
