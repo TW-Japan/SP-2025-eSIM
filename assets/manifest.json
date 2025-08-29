@@ -1,35 +1,31 @@
 {
   "name": "📱 Japan – Steph and Sarah's eSIM Comparison (2025)",
   "short_name": "eSIM",
-  "id": "/SP-2025-eSIM/",
   "start_url": "/SP-2025-eSIM/",
   "scope": "/SP-2025-eSIM/",
   "display": "standalone",
-  "display_override": [
-    "standalone"
-  ],
   "background_color": "#ffffff",
   "theme_color": "#0b3d91",
   "icons": [
     {
-      "src": "/SP-2025-eSIM/assets/icons/icon-192x192.png?v=3",
+      "src": "/SP-2025-eSIM/assets/icons/icon-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/SP-2025-eSIM/assets/icons/icon-512x512.png?v=3",
+      "src": "/SP-2025-eSIM/assets/icons/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/SP-2025-eSIM/assets/icons/favicon-32.png?v=3",
+      "src": "/SP-2025-eSIM/assets/icons/favicon-32.png",
       "sizes": "32x32",
       "type": "image/png"
     },
     {
-      "src": "/SP-2025-eSIM/assets/icons/favicon-16.png?v=3",
+      "src": "/SP-2025-eSIM/assets/icons/favicon-16.png",
       "sizes": "16x16",
       "type": "image/png"
     }
