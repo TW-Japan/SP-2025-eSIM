@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-globals */
-const VERSION = 'v2025-08-30-02';
+const VERSION = 'v2025-08-30-03';
 const CACHE_NAME = `sp-2025-esim-${VERSION}`;
 
 const APP_SHELL = [
@@ -8,8 +8,6 @@ const APP_SHELL = [
   '/SP-2025-eSIM/assets/manifest.json',
   '/SP-2025-eSIM/assets/icons/icon-192x192.png',
   '/SP-2025-eSIM/assets/icons/icon-512x512.png',
-  '/SP-2025-eSIM/assets/icons/favicon-16.png',
-  '/SP-2025-eSIM/assets/icons/favicon-32.png',
   '/SP-2025-eSIM/offline.html',
 ];
 
