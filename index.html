@@ -1,249 +1,156 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<meta content="#0b3d91" name="theme-color"/>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>🚆 Japan – Steph and Sarah's Travel Guide (May 2025)</title>
-<link href="/SP-2025-transport/assets/manifest.json" rel="manifest"/>
-<link href="/SP-2025-transport/assets/icons/icon-192x192.png" rel="icon" type="image/png"/>
-<link href="/SP-2025-transport/assets/icons/icon-192x192.png" rel="apple-touch-icon"/>
-<style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Japan eSIM Comparison</title>
+  <style>
     body {
-      font-family: sans-serif;
-      background: #f5f5f5;
-      padding: 1em;
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f8f8f8;
     }
     h1 {
       text-align: center;
-    }
-    details {
-      margin-bottom: 1.5em;
-      background: white;
-      border-radius: 8px;
-      padding: 1em;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    summary {
-      font-size: 1.2em;
-      font-weight: bold;
-      cursor: pointer;
+      color: #333;
     }
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 1em;
+      background: #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
     th, td {
-      padding: 0.5em;
+      border: 1px solid #ddd;
+      padding: 12px;
       text-align: left;
-      border-bottom: 1px solid #ccc;
+      vertical-align: top;
     }
     th {
-      background: #eaeaea;
+      background: #333;
+      color: white;
+      font-size: 14px;
     }
-    @media (max-width: 600px) {
-      table, thead, tbody, th, td, tr {
-        display: block;
-      }
-      th {
-        position: absolute;
-        top: -9999px;
-        left: -9999px;
-      }
-      td {
-        padding-left: 1em;
-        padding-top: 0.5em;
-        border: none;
-        border-bottom: 1px solid #ddd;
-        text-align: left;
-      }
+    td a {
+      color: #0066cc;
+      text-decoration: none;
     }
-  
-/* === Responsive card layout for mobile (keeps desktop table intact) === */
-@media (max-width: 600px) {
-  .table-wrapper { overflow: hidden; }
-  table { width: 100%; border-collapse: collapse; }
-  thead { display: none; }
-  tbody, tr, td { display: block; width: 100%; }
-  tr { margin: 0 0 1rem 0; border: 1px solid #e5e5e5; border-radius: 8px; background: #fff; }
-  td { display: flex; justify-content: space-between; gap: 0.75rem; padding: 0.6rem 0.8rem; border: none; border-bottom: 1px solid #f0f0f0; }
-  td:last-child { border-bottom: none; }
-  td::before { content: attr(data-label); font-weight: bold; flex: 0 0 45%; }
-  td > * { max-width: 55%; }
-}
-
-
-/* --- Mobile refinements for long 'Notes' cells --- */
-@media (max-width: 600px) {
-  td[data-label="Notes"] {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  td[data-label="Notes"]::before {
-    margin-bottom: 0.35rem;
-  }
-  td[data-label="Notes"] > * { max-width: 100%; }
-  .notes-clamp {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 6; /* show ~6 lines by default */
-    overflow: hidden;
-    word-break: break-word;
-  }
-  .notes-toggle {
-    display: inline-block;
-    margin-top: 0.35rem;
-    padding: 0.4rem 0.6rem;
-    font-size: 0.9rem;
-    border: 1px solid #d0d0d0;
-    border-radius: 6px;
-    background: #f7f7f7;
-  }
-  td[data-label="Notes"].notes-expanded .notes-clamp {
-    -webkit-line-clamp: unset;
-  }
-}
-
-
-/* === Key/Value layout inside cells === */
-.kv { display:inline-flex; align-items:baseline; gap:0.25rem; flex-wrap:nowrap; white-space:nowrap; }
-.kv .k { min-width:0; font-weight:600; } /* fixed label width for alignment */
-.kv .sep { opacity: 0.75; }
-.kv .v { flex:0 0 auto; }
-@media (max-width: 600px) {
-  td::before { content: none !important; } /* prevent duplicate labels on mobile */
-  .kv .k { min-width:0; font-weight:600; }
-  td { padding: 0.45rem 0.6rem; }
-}
-td[data-label="Duration"] .v,
-td[data-label="Fare Each (¥)"] .v,
-td[data-label="Departure Time"] .v,
-td[data-label="Arrival Time"] .v { flex:0 0 auto; }
-
-/* === Desktop: align column headings across all tables & wrap content to fit === */
-@media (min-width: 601px) {
-  table.fixed { table-layout: fixed; width: 100%; }
-  table.fixed th, table.fixed td { vertical-align: top; }
-  table.fixed th { text-align: left; }
-
-  /* Consistent column widths across every table (8 columns) */
-  table.fixed th:nth-child(1), table.fixed td:nth-child(1) { width: 12%; }  /* Departure Date */
-  table.fixed th:nth-child(2), table.fixed td:nth-child(2) { width: 16%; }  /* From (Departure) */
-  table.fixed th:nth-child(3), table.fixed td:nth-child(3) { width: 18%; }  /* To (Destination) */
-  table.fixed th:nth-child(4), table.fixed td:nth-child(4) { width: 11%; }  /* Departure Time */
-  table.fixed th:nth-child(5), table.fixed td:nth-child(5) { width: 11%; }  /* Arrival Time */
-  table.fixed th:nth-child(6), table.fixed td:nth-child(6) { width: 9%; }   /* Duration */
-  table.fixed th:nth-child(7), table.fixed td:nth-child(7) { width: 18%; }  /* Details */
-  table.fixed th:nth-child(8), table.fixed td:nth-child(8) { width: 5%; }   /* Fare Each (¥) */
-
-  /* Keep "Heading : Value" inline but allow natural wrapping within the cell */
-  .kv { display: inline-flex; align-items: baseline; gap: 0.35rem; flex-wrap: wrap; white-space: normal; }
-  .kv .v { word-break: break-word; }
-  .kv .sep { opacity: 0.8; }
-}
-
-
-/* === Desktop override: tighter middle columns, wider Details; prevent spill === */
-@media (min-width: 601px) {
-  table.fixed { table-layout: fixed; width: 100%; }
-  table.fixed th, table.fixed td { vertical-align: top; }
-  /* Column widths (sum = 100%) */
-  table.fixed th:nth-of-type(1), table.fixed td:nth-of-type(1) { width: 12% !important; } /* Departure Date */
-  table.fixed th:nth-of-type(2), table.fixed td:nth-of-type(2) { width: 15% !important; } /* From (Departure) */
-  table.fixed th:nth-of-type(3), table.fixed td:nth-of-type(3) { width: 15% !important; } /* To (Destination) */
-  table.fixed th:nth-of-type(4), table.fixed td:nth-of-type(4) { width: 10% !important; } /* Departure Time */
-  table.fixed th:nth-of-type(5), table.fixed td:nth-of-type(5) { width: 10% !important; } /* Arrival Time */
-  table.fixed th:nth-of-type(6), table.fixed td:nth-of-type(6) { width: 7%  !important; } /* Duration */
-  table.fixed th:nth-of-type(7), table.fixed td:nth-of-type(7) { width: 26% !important; } /* Details */
-  table.fixed th:nth-of-type(8), table.fixed td:nth-of-type(8) { width: 5%  !important; } /* Fare Each (¥) */
-
-  /* Keep 'Heading : Value' compact but allow wrapping on values */
-  .kv { display: inline-flex; align-items: baseline; gap: 0.35rem; flex-wrap: wrap; white-space: normal; }
-  .kv .v { overflow-wrap: anywhere; word-break: break-word; }
-  .kv .sep { opacity: 0.9; }
-}
-
-
-
-/* --- Mobile readability fix for Index A tables --- */
-@media (max-width: 600px) {
-  details { padding: 0.75rem; }
-  table { width: 100%; border-collapse: collapse; }
-  thead { display: none !important; }
-  table, tbody, tr, td { display: block; width: 100%; }
-  tr { margin: 0 0 1rem 0; border: 1px solid #e5e5e5; border-radius: 10px; background: #fff; overflow: hidden; }
-  td { padding: 0.65rem 0.9rem; border: none !important; border-bottom: 1px solid #f0f0f0 !important; }
-  td:last-child { border-bottom: none !important; }
-  td > strong { display: block; margin-bottom: 0.25rem; font-weight: 700; }
-}
-
-\n
-/* Label separators by viewport */
-@media (min-width: 601px) {
-  td > strong::after { content: " — "; opacity: 0.8; }
-}
-@media (max-width: 600px) {
-  td > strong::after { content: ":"; }
-}
-\n\n
-/* Label separators fix */
-td > strong::after { content: ": "; }
-
-@media (min-width: 601px) {
-  td > strong::after { content: ": "; }
-}
-@media (max-width: 600px) {
-  td > strong::after { content: ":"; }
-}
-\n\n
-/* Desktop: hide inline labels to keep columns aligned; Mobile: show labels */
-@media (min-width: 601px) {
-  td > strong { display: none !important; }
-}
-@media (max-width: 600px) {
-  td > strong { display: block !important; }
-}
-\n</style>
+    td a:hover {
+      text-decoration: underline;
+    }
+    .provider-logo {
+      height: 40px;
+      width: auto;
+    }
+  </style>
+  <link rel="manifest" href="/SP-2025-eSIM/assets/manifest.json?v=3">
+  <meta name="theme-color" content="#0b3d91">
+  <link rel="icon" type="image/png" sizes="32x32" href="/SP-2025-eSIM/assets/icons/favicon-32.png?v=3">
+  <link rel="icon" type="image/png" sizes="16x16" href="/SP-2025-eSIM/assets/icons/favicon-16.png?v=3">
+  <link rel="apple-touch-icon" href="/SP-2025-eSIM/assets/icons/icon-192x192.png?v=3">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 </head>
 <body>
-<h1>🚆 Japan – Steph and Sarah's Travel Guide (May 2025)</h1>
-<details open=""><summary>Trains — Aug 2025:Sep 2025 (Shinkansen &amp; Airport Rail)</summary><details><summary>🛫 Kansai Airport (KIX) → Kyoto Station (Sat 30 Aug 2025, 21:00)</summary><table class="table is-narrow is-fullwidth fixed"><thead><tr><th>Departure Date</th><th>From (Departure)</th><th>To (Destination)</th><th>Departure Time</th><th>Arrival Time</th><th>Duration</th><th>Booking</th><th>Fare Each (¥)</th></tr></thead><tbody><tr><td><strong>Departure Date</strong>Sat, 30 Aug 2025</td><td><strong>From (Departure)</strong>Kansai Airport (KIX)</td><td><strong>To (Destination)</strong>Kyoto Station</td><td><strong>Departure Time</strong>21:00</td><td><strong>Arrival Time</strong>22:15</td><td><strong>Duration</strong>75 mins</td><td><strong>Booking</strong><a href="https://www.westjr.co.jp/global/en/ticket/haruka-oneway/reservation/" rel="noopener" target="_blank">JR West : HARUKA One‑way (Official booking)</a></td><td><strong>Fare Each</strong>¥1,100</td></tr></tbody></table></details><details><summary>🚄 Kyoto Station → Tokyo Station (Tue 02 Sep 2025, 12:00)</summary><table class="table is-narrow is-fullwidth fixed"><thead><tr><th>Departure Date</th><th>From (Departure)</th><th>To (Destination)</th><th>Departure Time</th><th>Arrival Time</th><th>Duration</th><th>Booking</th><th>Fare Each (¥)</th></tr></thead><tbody><tr><td><strong>Departure Date</strong>Tue, 02 Sep 2025</td><td><strong>From (Departure)</strong>Kyoto Station</td><td><strong>To (Destination)</strong>Tokyo Station</td><td><strong>Departure Time</strong>12:00</td><td><strong>Arrival Time</strong>14:14</td><td><strong>Duration</strong>134 mins</td><td><strong>Booking</strong><a href="https://smart-ex.jp/en/lp/app/" rel="noopener" target="_blank">JR Central : Smart‑EX (Official booking)</a> Ordinary: ¥13,770; Green: ¥18,640; Non‑reserved: ¥13,320</td><td><strong>Fare Each</strong>¥13,770</td></tr></tbody></table></details><details><summary>🚄 Tokyo Station → Shin-Osaka Station (Fri 05 Sep 2025, 14:00)</summary><table class="table is-narrow is-fullwidth fixed"><thead><tr><th>Departure Date</th><th>From (Departure)</th><th>To (Destination)</th><th>Departure Time</th><th>Arrival Time</th><th>Duration</th><th>Booking</th><th>Fare Each (¥)</th></tr></thead><tbody><tr><td><strong>Departure Date</strong>Fri, 05 Sep 2025</td><td><strong>From (Departure)</strong>Tokyo Station</td><td><strong>To (Destination)</strong>Shin-Osaka Station</td><td><strong>Departure Time</strong>14:00</td><td><strong>Arrival Time</strong>16:30</td><td><strong>Duration</strong>150 mins</td><td><strong>Booking</strong><a href="https://shinkansen2.jr-central.co.jp/RSV_P/smart_en_index.htm?" rel="noopener" target="_blank">JR Central : Smart‑EX (Official booking)</a> Ordinary: ¥14,520; Green: ¥19,390; Non‑reserved: ¥13,870</td><td><strong>Fare Each</strong>¥14,520</td></tr></tbody></table></details><details><summary>🚉 Shin-Osaka Station → Kansai Airport (KIX) (Sat 06 Sep 2025, 14:00)</summary><table class="table is-narrow is-fullwidth fixed"><thead><tr><th>Departure Date</th><th>From (Departure)</th><th>To (Destination)</th><th>Departure Time</th><th>Arrival Time</th><th>Duration</th><th>Booking</th><th>Fare Each (¥)</th></tr></thead><tbody><tr><td><strong>Departure Date</strong>Sat, 06 Sep 2025</td><td><strong>From (Departure)</strong>Shin-Osaka Station</td><td><strong>To (Destination)</strong>Kansai Airport (KIX)</td><td><strong>Departure Time</strong>14:00</td><td><strong>Arrival Time</strong>14:51</td><td><strong>Duration</strong>51 mins</td><td><strong>Booking</strong><a href="https://www.westjr.co.jp/global/en/ticket/haruka-oneway/reservation/" rel="noopener" target="_blank">JR West : HARUKA One‑way (Official booking)</a></td><td><strong>Fare Each</strong>¥900</td></tr></tbody></table></details></details>
+  <h1>Japan eSIM Providers – Comparison Table</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Provider</th>
+        <th>Avg Speed ▼ / ▲ Mbps</th>
+        <th>Packages</th>
+        <th>Highlight</th>
+        <th>Where to Buy</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><img src="data:image/jpeg;base64,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" alt="Mobal" class="provider-logo"></td>
+        <td>129.4 ▼ 15.8 ▲ (4G)</td>
+        <td>8-31 days 3-100GB</td>
+        <td>Best value for heavy data usage: <strong>50GB / 16 days only A$40.72</strong></td>
+        <td><a href="https://www.mobal.com/japan-esims/?" target="_blank" rel="noopener">View offer</a></td>
+      </tr>
+      <tr>
+        <td><img src="data:image/png;base64,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" alt="Ubigi" class="provider-logo"></td>
+        <td>83.0 ▼ 10.3 ▲ (5G where available)</td>
+        <td>1-annual 500MB–Unlimited</td>
+        <td><strong>25GB / 30 days A$55.53</strong> – Fast 5G. 10% discount code: TOKYOCHEAPO</td>
+        <td><a href="https://cellulardata.ubigi.com/tokyocheapo/?" target="_blank" rel="noopener">View offer</a></td>
+      </tr>
+      <tr>
+        <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAABSCAYAAAC2eC1AAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAYnUlEQVR4nO1deXwV1fX/npkJYU/CmoQ1gGUvArKoRWSTpSooqFS0UgUVK7WidcVi7a/VUrVqFWutipiiuILsmwhGUGRTkC2QsCQBwpIQyJ43p3/cPN52Z+bOe48k8uP7+dzPvJzMPfd7z5y599w7d+4QlxgMMAQI4rf3KJPZ/S/aMqqUR1PfT4H7T58ncYnu/U/QCeHIoqGjumTVXf6FxZNEi1XdkN1BNREyfjWRc/XzNOR3RHV4eXDTGi6qg2c43C9snjWkxbqICw2GOER6l0QrsAy3/KrmWVO4h1PHquF5MXgPQU3i9NPlWQ1doWpgeTEoDh/Vz9MieI82wg0sa0L4d5FnODCqzotl5ajKqhsXebqFJg4Mnzf7H1Vlsv+xzfluZDK90eQZLZlK/SPRJzu/5tpYi6yLCj4G/w5Hb7TmaGQjIrs6nA+egbLCQsLu3W70hfLctBk4fVpyWrXYOJSf96iJE/0ToCZzm+z0QvE8NzKZ7urhWVJMeHUW0LG7B4uWsou8vlRSTHjmL8BVQ0wQWZ0bfe7h+kIVBe8yWHl+TUP4PI8dI7zxFuO1f5nIzbVrSa1RVkqY/R7jrzNNHDzE6NCO0LChLJ9qK1Q1iFrwfjof2LSV8f0PQEYmIysLOHESOF3AKCkhmB6GEUOIrcWIiyPExzOaNwOSEoF2KYRLOgBduxASEqJCJ8pQt5FpAl+lMf79FuOT+R6Ultrps9Z74gTw9ruMV2Z5kJ3tc4j27cgmn0wenevrFhHNvO/dS5g7j7FsBWPzVhMVFVbF2MVkPmgakNKWcHk/wtDBhJHDCc2aBd/p7nmqtg7y8+1aGCFjk7D1e8an8xkffMTYn+FUllxfSTFh2UrG3HmMhYsYJaWhelq2REg+VZ5VIxNHSVfooIgJa9Yynp3JWP2lB6aJqME0gf0Z4sKkvg/EGMDwYRruu5cw8hqGCC6i4Whuzne+WNt/BHpf7nGonTxvfj7hlddMbNwErEszceaMvVM2bRI+z1BZtOzpLxNHI7CQYIIUkPnIEWDKVBOfLzbBVdBdl1cAi5aaAGkYOVxT5qkmg4VMdr59We5t4dPXsAGwcDGwaYvaHZqQIAvKQ/W6t4ksb/j6tMDMsi5LpLSvGT37ebBgUdU4lT+m3B18h1nzjFwm0x9cVrAsHFQOy3XGXRPV46D4OG9eGV8nnsF1k9kzOjY2rL3fh6/XM4Zf50FRkeUp5w0pbQnDhwXfGVUNN8GyPTQtNN+AX6jnr18/HD52Qf35Cfgdpxuycwg33mJWi1MBwN13adCDF2BUC5xiFXsYBnD/vRqmTPZ26T6ktCVoGpTi1ZgYSHg4IRoDGncwAgsJ7VsfesRE7nF1Aq1aEsbeIEZ27VIIjRoBtWMBj4dRVEw4cYJxOAvYt5+xfQewaQsj84A8TomNJdx5h6y/D+Ys4+4P1fghEpkcmgaMvUHDjCcJXbt4pYF569aBsmPRueKixV3Vnu5sbBu8700nfPSp+mjniUd0zJhOqFVLRlqg48+8f1f+nzUczgJWrGZ8voixfKV5bu5n7BhCs2aqBopEZmdcVVkgGjYg3HYrYep9Gjp1BGzLJ7edz/ngHl17GnYFz/uIlacTevUk/OVPBFBwhYON4U9EnN+qFeGuicBdEzWcOKEh9X3GP2eZkqDdrYHgJ4NEJjvPgqelzOcSdWoTBg0k3HIT4cYxhPr1JUExe73Iyk4qcGljR9vBxXlW5QfKLIJ38XtdmnqlGzfyGkymDwoyQapJE8LvpxLun6LD0K3Os5L5/ldQQNi3Hzh4iJGTA+QeBwoKGEXFQEWF6HZ0nVG7NhAXByQ1J7RrB1z6cyA5SdaEWHNv3Qr4coWOPr0JdevJOZeUAM/OZDRtyrh/iuag1wmR2DgaMueybIP3zEx1x/pynYnVXxCGDFbOYoFKjzdc5GDCrl3AilWMr9YztmxlHDqs3tr6gwi4pANh9LWEib/W0KWzsw0SEoCBV/m4+6O4mDB7DuO5500cOsz4+7Ohwbt7MFauJvznbfcVHH0d4dbxzudt+Ibw0j+d9Y+7kXDTWBnFEoOtUpPGxBBWUEq6Bh41QuN//VPn7742uOC4tW77pLs6/6nHdVc8VZOmgSeM1/h4lhueOnOxwTu36fyHB7UQG/79WU2qK8ZQ4/TRXFFmWYHBfS7TXNWHCJy5W83G5WcNTk6yv/516xAf3ifP7/esMDRGqVPH0WED4DGBJctMLFkm/tY0oE1rQtcuhG5dxEPmrl0InTqiUrdKPx98XqisuDjSFkAO0wT++4GJtPWMZQt1dOpozdM0gR07GIuWAp985sHW7+1m5CX1cdkjxtRivP2Ghp797J7RBkLXgeRki/KDZIYBNG9OyDlibdt7JpPfs8tAfYbdxW3fjnA4K/yLZppA5gExnbBoiU9uGED7FEK3boSePYB+fYB+fQkNGgSWb+1wVrLzg4OHGCOv92DTeh2NGweWX1FBGD3OxLffMU6eVOUh4e6qCiJvt66MO27T8NZstS6xogJI3yducCd7MhMOH7YmFVsLmPY7/2498KgFBmeBgdqAK8MJLJ1RUQHsSWd88pmJ6U97MOyXHjROrsDAoSZencU4edKak1x2/nHgIOOx6SaCL4ZhAJd0gAun8kJWH/d5n3xMQ61a6jkXLvZ3pODyfceMTOCETZ1uHa9VtlYkTZpdt3zrLVT5COL8o7xcPN2fOs2DVh08mDLVRHY2LLkFJmsQAXXrkOiSOxN6dCf87BJCfBz5TTaqYc5/TeTmAj7nEunmcW4dw10d7PKntGXcfqv6RUqd633Wa2/TZSusOREBD55rreRJsjTZlzp1Au64rYo8yw/FxYx/vWmi86UevPMuALbmGHy3x8YSBg3U8OcZOlYu0ZGdYeDsSR0H9urYsVXHtu907NmuI++ojqz9Bma/qaNbFzXHKCsDFiz0v+NF6tmDXI1inergNv8j0zToukOWSvy4i5G23oqDL338qbVjDR2soXs3Bx2hIwQ94Hg61+Du3dyNDqOdHnlIjLSseD78e4379Nb4zVk65x21r484BsoKTxncvataHSf9RpPqTUpUyy9GhcGcDI6JUbOFd1QYXJ+bxqqPECeMl9XB9ztzj8GaZp1/8Wc6O9lYsmwmMIhr2JDxxTIdAwdUfcvlxcwXPHj7XWuejz6sYWOahkl3iiXP8vPgdwysY926jCGD1VqNAwe9egJ11KvrpkbBwTO77A2D60V49CFNuWv/ZD7j+HF/HoGc5qRazwF2aE8YcQ3BzmcAh+DdK2vSBFi1VMPzz+lIiK+6gNkfDz9mIi/Px8nHD2jSxE9kWZ/gbsd3/CqNkDpX7coWFHgN6NUh/iYt/AA8kuDd+7t3L9FFqaCkhDH7veAuXfw2TWD2e9ajzCl3a9DOdbvWPmMbvPsnw2A89HsgY7eOF/6m4+fd1O+QaCAvn5H6fnR617IyYOs24MWXGQMGmxg4rMJ2BOQPk72V9uqD31EVMl6R5mc89rD6BXnzLbOyVQrUsXadmB6SoW5dwsTbKSSP1F9ElmBCbCmLjwemPUCY9gAhM1PD6jWM9d8wtmxj7N4DlEpeAIgWlq9kTL3P/6605skM5OaK5Tn79ou19On7gJ27GXv2RsozuPn3ylQRnDcchOYdfDXQ9zINGzc5z2ul72esXsMYNiSwG3tnjnU9bhknlkHJyw+sj9+yGe/Jof23VT+akkKYlAJMulMMPSvKCfsygJ27GD/uAnbuZOzcxdiTHh2H25tu3aeXlRJWf8lYuZrx7UbGzt2M/Hz1MnUd8CivEJLZyQ1kNnYDi+tEjEcfJoxVeBYIAG+8yRg2xKevoIDwyXz7btDK/sGyoIfQMmM5BcA+mRHD6NQR6NQRuHGM9xwKcLgftoulzmvTTJSXqxnAi7z8UE5nzhCe/wdj1hse5e7MHy2SCfdM0pCXD/zjFVXPisSpIMkbTlcov05jrgM6dyTs2uOs8/PFJnKOGEhOEnnnfcwoKpLnu6yXhj69g7nb+IL8bolEFgojBpUOR+ccLidHw6R7TSxdof6Evm7twDL3ZwAjr/cgfZ/ahYmNJXTuKB5p9O5JGDiAcOml4pnmU0+H4ySRtFzR6AZDdWg68IdpGu68x/kmKS8H3p5tYvrjIryYbdMN3juZJAMkGadKHtaBJOOzBVz5gNPfG0PPC0eWnAzMnaO5mlhMTvYFjsXFwLU3mEpO1bsnYckCHQXHdWzdqCF1NuHBBwi9ejE0zZ+jKvwDWISRX2YTt7C28YTxhJYt1Rz3P+8wPB5g9x5g/TfymzwhnjD+Zlmdra+xxcw7ABAef8pE5x4evP4GcPYsLM8LVxYT4+6+7dnDpyf1fcZuhea+RQvCmhU6Rg6nymdqVpzcQlZHN3nPR/nid61Y7wNiZxw8xFi6nG2nGG6fQKhXz79M+/JtphsAgJGUSNi3n3HfAx60SPFg4iQTny9iFBYCoXer3fBTch4DM19klCsu+QCAEcN9d83ylWp3+dBB3lUTwTxldVCF7C51m98/L7v0LWcbT76TxKpeBbzwkon3/iuvAxFwz6Tg54IyDoHlS9zaFy8kJvqkBWcY76aaGD3Og8bJHlw9jPHU0yY+XwQcPASwSUE6/OGLQzwewvoNhHG3mnjmL+ovarRs4Z3xFThwQO1ilpZ5y/c/ygJQt4hm8B6OKmsbA0D9+ozfTlFrtb5cx5brrgYOCF5FK6u3y+A9qbm8sNJSxtqvGGu/8snq1xNrxlu3JDRtymjQgBAby5XnE/LyTRw8CPyww3Q1DeDFMzM0v64Myg9dV3/BOHNGq2y1/FFZbwbmL2T8W3GZL5t+eWtg8O7PaeoU4IWXCIWF4d4AwJTJsq7aOXi3XfOemKhe+bOFYirhh+3hV8IK147SMPG2wIvXvh1h4ybnso6fYIwa7cHzz2m4rBdBN8TivPR0YOVqMZv/3Wb1kWnZuSkS/7IZrLjvgJhiCW6tSNktAwdT/gidfmjShDBpIuHl18K7JonNCWNGh9cy2+6PlZQYfSdxi759CKnvaKCgV9NHjQDe/1BNR9p6Rv+rPKhVi9CgPnDmLFBWFli35GRCTo5zfX27wQTaTb4PVihOngrNW1YG5f0wTkny+xAqn/aAhtffNFFWpqbfH3dNDOwl3MB2c9vE5u7JRBPXjdKwaomOuLjQQPmmsYQO7d1VuKyMcfIUhzjViGEa7pigFo9k5wBlpV4u4lhRITaZU8He9MC8AOP4CfVZ//T9asGz93fr1oxf3ex+ZYquA5Pv9NrXvgyL4D2w+fRvUlu2dLuALTpIiCe8+pKOBR9raNBAFsMwYmOB1Hc01K0TSawC9O9H+CBVfaFceTlj2w+BnHb8qP5CxzcbGaYZWJ/NW9V7hrSvgUBbeCG3E0B45CH3K4FHjdDQpk1wWVZlhB5tN7ft3AnIzjDw+is6RlyjoXZsZBfRCU0aE554RMfeH3X89l4K6v5CefbrS1j6uYbE5u55EQG/+bWG1Ut1xMW5y7t46TktAAhzP1B3jOPHGes3eC9Q5Zyc4pIdANiyzcShQ7K5R2s7delMuP6X7jxLBO1yffKyg5Jv9aBzOnvS4OWLdH7iUY0HDdS4YcPIV5a2aU38mzs0/nSeziX5hjIX/3Qi2+Bpv9O4YQM1PldeofGqJYE6pj+m/m5iyxbE5WcE19wsnRsolutNv57gW8G5Y4vBuu7OZk9Pl9lBZjufbMNanYnU9LdLIfYUhnctvCmib+mYJpCdDezaw8jMBHKOMI4eA/LzgcJCoKhYjIIMA6hdG0iIF1sdtmlD+NklQM8ehORkRG1dV1Gh2Fwk7WuxouLkSbH2qk4doHUr8XxwxDWELp0REo+ePg0UFKiX1SJZPJcrKwOOHXPHs1YtoHll/Hr2LCpf0FBHvXq+/MpgYPAIE2vWOo+An/s/HY+6WNslAwV+E/qcGO5kqkNSt3rPp0yVp10dq1LmVAdnnvM+Asbfbj9KiI0FDqUbEWwqLI5+a95lJ6gogsX/ghEOwXBlTmW44enkVJHwVOVu9T9/OPNcs9b55ho7RpM4lXtf8Gux/IeWMoVQkKnkDaesSPKGKzufPKuee34+0KqDB2fP2jvXutW634vK4fOUvGIPv98yEk4ymT4KkrGNTKbD6s616yLClVUVz0hsHMzT+7c193dT4ehU3bsSBlwRHZ5Km9uGB6tuxo0suAl2oyMSXFg8TZPw+r+dZ2Dvnex9aStyno6b2+blEbbvELv1Nm8mVjxEd7NZ+z67tJSQlS0+AVJSIkaXTRoDLVsAsbWjycMebBKO5YqZ99MFInpo2JDQIhlIbA6QVnVciosJh7OAU6cYpaWE2rWBZs2AlDYs9YkVq4A9e+351a8vtrZ08gdVOG5um5kJDBzmWzTVoAHhsl6EIYMIo68T2xP5tocMzBtOTFFRDqxZx1i4mLHuK/FShGxtfEwM0LkTYcCVhOt+SRhyNcGICdXnjlOg7MAB8XLnilWMTZtNnMqTG71xY2GTYUMIY8cQ2rb16kJQGbKyrG3hlZWWEJavYixeykhbz9ibziFbFw0drGHlkuCPLAi8+LLzFMOE8d6PP4XPMyCv0yv22ZkGV54dkojAfXprPC9V54pCtdfZrco6dcTgZ/6oO272ZZWSk4j/9JTOJ3OcXrG352kWG7x8oc7XDNVsXzO3SpoGHjZY4xWLdDaLVcuXy7IyDP7DNJ0bJTjb5ItlMlsb/P1GQ2lidOu3sg3ZwuWuM5xOLC1Q222uS2fi9+d4HSx41tZalnfU4Ken6xwfF539IeIaEj/1uL+D2SXfOWaxwUsW6Ny/r7td8uzSFf01Xr7Q62B2N1xgytpv8NT7NK5TW80m/ftqlXtbhNr4jtuc63N5P/l+FHLO9ty9yXarSG9KbK5+0bt2Jv7gPX8Hk6f8Ywb/6SmdExTuxrAcLI54+mM6Hzlgz6P8rMHzP9S5XxQdKjhdebnGS+Y72yRjt8H3T9G4Tm13+hd8rEv1ZWcYHBvrnH/OW/L8kSTiEudIvGc/xrbv3W2k2rWL2KjixjGEevV8RWRnE96azXj5VeuYJZqIiRHLawcOQOW+WGK58qHDwOYtYu283XaI0USLZPH5ll49RdAfY4j1WXvTGevSxFsy6i/NCnTvSvj+O106eHj0CWDmi/YKmzQmHN6vo3aUB0JKzwpHXe/u/T9/1KlD6NSRUL8+kJvLSN8X3m7GFyFH6js6JvwqdCiYlwe07eip3MTEGg8/qFXu5Bxd2G5u65X5v1ThFsXFjK3bqqZF+P+GdiniYwWh14wx6w04OpWmed/AgURHZDLbzW29sil3E3p017FrD2PNl4y9im8eRwrDAC7vp+Hy/sKI9eoChUVi//kN34quQ3XH4EjRtjVh0NWE7t0IzZsBRGJVwg87xOYaBw9VjU1iYwm/uILQvy9h1AjAONfh+K5ZURHhldec+9RhgzV0aG993e1l8DsiVOY2KDOLDd6w1uCbx2qu1xGppvh44j8+oXNOpj2XnEyDZzx5/gYARODhwzRevcxgsyh4tORLniKDVy3ReeggTXnNk9uU2Jx45l/FtIzTNXrpebW1ZZ99GP2g3ZtcLfQLTts3G3zzuPDme6wcasZ0/+0e1VL+UTEH1qhRdByMCDxquMYb1sqG8DZD7WKd163SefDV0RthJiUSvzhT58JTTjYR/y/KMzg52dkOrVoSl591Z2c3yXWLJUvbN4sWLFwHi48jnvGk2t1ol07nGvzXZ3Tl/UCDU0wM+KaxGm9Mi9AmxQavXWnwtaPCb9XbpRC/8oLORafclf3C39Raq2f+KP9CRrSS4rIZFRljx4+Ev//DxIcfM0pKGE5IThJbCE29j5CQEKrPur+351ReLt4ZXLBQxD8ZmdZfiYiPI/TvRxh5DWHsjYQWyXblWsmsOR08CHz0qdje+rtNjAKLj4kbhtiNZ/DVhBuuJ1z1C4Kmq9giUPb0n4GsbGfb/3mGhqSk8G3s5AuV81huDYmg3wiQ5ecTVqwSS4R37gaOHmWUlYkvY7VqKb6wNXiQeM4ngs9IyneWnToFZGQCx3IZRUVibqtxI/E5lpYtYHMBYavXrczjAbKygcOHGfn54pWvevWApk0JHdojYL7PXRnB50efu8p1D5CIFqu64e/9drLqxkWeqnBcNuODzFMjQbA+me5wylO9k8PVJ2stomWXC4en681tw5PJEG7/fT55WnG/0HlGn3tEm9vWfBmioKM6ZNVdfuQ8JQ+h3QaFqohEb1XIqrv8C4tnDQveVbvR6oJdN1KTYNdVVQ1fi+C9Orzcqhtzi+rgGQ73C5tnDWmxLuJCQ5RaLKe7INxg2wmR8FQt3y3PquBup69m2Nh2c1t1mRNBN82ylSyaPO24R8rzfHO30luzbFwNXaFdYOkkq0r8VHjKUP3c/weRZe0uF+5cvAAAAABJRU5ErkJggg==" alt="Saily" class="provider-logo"></td>
+        <td>82.6 ▼ 30.7 ▲ (5G where available)</td>
+        <td>7-30 days 1-20GB</td>
+        <td><strong>20GB / 30 days A$36.62</strong> – includes “Virtual Location” + “Ad blocker.”</td>
+        <td><a href="https://saily.com/esim-japan/site/?coupon=TOKYOCHEAPO10" target="_blank" rel="noopener">View offer</a></td>
+      </tr>
+      <tr>
+        <td><img src="data:image/png;base64,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" alt="World eSIM" class="provider-logo"></td>
+        <td>64.5 ▼ 21.0 ▲ (5G where available)</td>
+        <td>1-30 days 0.5GB–Unlimited</td>
+        <td>Plans from just <strong>A$5.49</strong> with 10% Tokyo Cheapo discount</td>
+        <td><a href="https://world-esim.com/stores/japan?esaf=WFTFMMR2" target="_blank" rel="noopener">View offer</a></td>
+      </tr>
+      <tr>
+        <td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAABJCAYAAADfad8YAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAeAklEQVR4nO2dR3AcaZbff19mljeoQsF7bwgQ9HZINtneq6d77O7OYXTQSVLESqEIKUIHHRSh0FEHRUiHDSlWEerZ2J3Z6Z6dntb0sA272fQG3jvCexSqUEDZ1CGzHAyJIolpdnf9DwAq6/PfP99733svE0JVVZXHggqIx6uaxXce0q7fPJJueyTVru2oD/n0PcG+r803t6oiK7H2A9m12V1iPRLf74V7OLJr8wTEyiKL3ZElVhb7giyxstgXZImVxb4gS6ws9gVZYmWxL3giYn0XnZpPa07fRqfmo5DJyDJ2kP7wF/+ae+097OSr2dktmHo1vSu3y8m//+t/wZuvXMBmte7awsMQCoVp7x7gr//Df2Fyem7HMi9dPMN//U//htxcV0ZtPx08LWfpt8vpqmRaIbC+gXfNj0CA0Car6oQRiZ8qKkL7GhWE9k0qhYUAWZYJh8Mp1x9v4aLRCD7/Ol6fT+9db0nVxhjY2CT2uAGGJ8bTIsO3h1TwmKpQCIEqVFDjFNI5BqCqqKrQfutbrKqk8ksvHK8gnsKS6ZRWhdaj/lsbYJxqWfw58Xg2loouDXRJhND2D4EqhH5ZaATUrsZFSHp9Uq49JtJq6xxKHQsi/kUWf05krArjsibBk6QYSkgJVfuoSSqRrKTG1WdCosCTb3qKGlZTxKIaH0NWWn0TyJhYBXm5lJYUZFBjqyrSPgsgJ8eBw25FkuRMh5HWGiQFYMKuI86tb7m0etZs/z22kzGx3nj5AkfamvRPKaQRbFFvYstvttWxmM001FZiMGQ8jARUUiVU3LbT1bGKZgt+m/Gs2f57bCfjHX3nzReIxVRd7aT0lMbkVKNZt3PUlAIirr4ERqMBRXl8d1raPFP60P5UEeq3XGJ9S7GdWI8QdRaz+aENPlJSPqFITrfvEhadDhF3dCT5/jR5tZexP8n89lh3t2Jb1+aJ8QTtbCfWIxqamV0gGArt+r1Qk5sZl1lGgwGnw47NZkGIJ5ux2PJH/Fya7Fx3gahCd2OpW2s+hc517LTwGXSzrfoe6+5WbOvaPBlS/UOZI2NV+B//83+js2dA/xSXENrfiQGlQVBXW8FPfvgar71wDpPJ+NiD3RnJyau6+hVCED+aJiXaPthaT7iBz7aSfrLRZUysiek5Bkcn0o72IsVIFgkZkrSzjCYDaz7/Ph79U8VXqisjzSu7T31nsRMytpqTXnahbaGqJlSQ0IweVFVTRULwROJ0b0h68YWqjUckPost5b6P+Gbm/Xjn/LifUz/iJx2j6Q7KuIDa3xO/IGFpCaEfQDWyxT3w319SwTclqZ8gbSbd4y30TU0EcfTjiRCZG4EpPs7EFZX0IPbWcYAmsVRdRWtjEYnxbC2bxf5CyfRMabNZcDptCeM47itSE/FAtvhHBTarGYOyN+E4v7DEvY5eBobHiYQjaUOTZYnTJw5z8ujBlBopxjupNl5CQ5Ma8N6GaBRCIa2MwQiKvHO5LDKCkukivvnKRQ63Ne+u3lI0T5xf+Xm5NNRWIStbQzfbST03v8RHn1zhw48/IxDY1GWO1qDJaOTf/atfbiFWatfJU6oWAFeRJQlFVtLdHCoQDsHkJAwOwNyCJg5znFBZCbW14LCDeByB/gw4kfalncyQsY31Fz96g2gsllEdSZIwKDLKNqm1fcKqqhKJRAmHIoRCEYTQqaKr281giHA4gqIoCAGxWIxgMKTlWwnNORoPCggBJqMJm32L/ywShq5u+NOf4NNr0DetXS/KgdOt8MqLcO4c2O2PcfjYrXymG/ysxXIyQ9pO72Xq0WiMSCwKCM2mESJZc6vGieujSIxQKAIimCLQNKKYjUYMioKQtEqyLGmxQ0GSVKCTSOXB5AyDI+OUlxYhyzILi8v09g8TCobiPve0uVitZtw5TiRJlz6xGMzPwz9+CB9+BrNeCEW1CuubsOyDhWUoyIeWVtAjDU9+33931etOa5NGrL1M/da9LpZWvDvWSYnU7fBXiums2/MGg8KBxlrKSoswGQ0A2G028nLdyJKEqgrN+NftuWg0ypWvb2O3WTl76ggWs5mBoTH+4YOPWV3zpRxDkwrUabeRn+dBlnViBYPQ0QEdfTC5AtG4eAPCMVhch84R+OwKlJRCcfGe12Y/8KwpxL0GGx6tCre09D//19/R3tWnCyMtkzT5dao80j6LuF5S4/G7pHGWk+Pg3/7Lf05RYV6CWAX5uTTWV2O1WPD7A8QSPjNQ1RjTs/O8/+uP+OAPnyIJQTAUZs3nJxyOaGpQqAlSSUKirLSIlqZajAatfY1YXTA9r5Fq6zxVFZb9cL8L3vYliLXb2iSm9SR4yK5n1PbTauch2Gs7jybWlpaWV7zMzC1pXyXsH3T7hu3qKClwknFEVSsVDIXZ3NxM8yOYzSbKy4pobqjBu+ZnMxhMuB9UVRCNxlhb8+P1+RPtxFOghU7guF/U7XJy+GATh1qbMOrEBTQbKxrbLkpTf4ciu/k30tbmqWzYt9uc2hGP7cfaInz0DY7bWaoeCI7f0eqWo7/Y2lLykxDUVFXw9uvPU1ZaiKLIusDTPeo7tpPCEAGSALPRwLnTR3n1xfO4Xc6k8S5Lmv1kt+6+EUYFCnLBYNilQBaPwmMTSyWpBgSq/sDELmpR6FJEpJBBpLaUDo/byaXzJ/mrH79FbVU5ZpMJSUiaYZbSjkhtR2hXDIqM02Hn4rkT/PxHb9DaXI+S6uYwmaGtDeoqwGHaznFFQH4OXDgL7m/icbHvBjJ2NwghkKQtkkLE1V/yuki7zpby2i9JEmwtAdpjYaXFBbzz1guYTEb+9MU1BgZHWVxeZTMYJhFmjrcjQEgCm81Kc30Np463cen8KY4casa+NVXHYIDGRnjrFc0xeq0HVgPadyYZKvPgxbNw6hQ4nJkuTxY6MiZWW0sDRqOSFFeJLAc1KXySZpf+Oaki498DOOw28vM9SLK8TUEqikJZcSHv/bOXaaqvZmRsgpHxSWZmF/D6/ASDmrdclmUcdhsFebmUFBfS3FjDwQP1FBXkp0uqOIQApxOeuwBWCzTehqkZiETAkwstTXDkiGa07zFakMSzdob75rD9SehHzOnmnU68a74n7FXrx6Ao1NdVUlSQn3QHbIGWsKASi0VZXPaysLiM17vG5qZm1CuyjNNppyDfQ77HjdFo0OKWj3JsqipsBGBhARYXIRzRVF9ZOVgsIO0wnr3s95+BE7t18SzRMeNH7CORaCLEsqNDNPVz6rX49ZQyAs0rL+20iTsgFtOCzKoaSwjAeGqOJIRuh2UwGT3NhngkQQiNUHv1tj9LO/mMIWOJtWf8Wdv5M+3wd3Vt9mH5nuCtyVlksTu+4+/H+p7dM8/QdL/jxPqeGUDP0HQzdjeEIxGikei2ByNS1bQkaRkKqUZ5LBYjHI4QiUS0tBshkCUJg6KgGBSkFIM5pqpEI1Ei0SgABkVGlmWEEIk2QPNdKYqCLMkPtbfjfcdUzUiXxPbx7VQnFA6jxrQsDEVRdnZfoMUZImF9vHpsVJG1ee00rFgsRjgSIRbdOf1IkiRkRUaWpIeebuMpRtGoth9CklBkeddxRqOxxPpLkkCRZWRl5zEm1lmAJMmJWO5ekTGx+gdHeTAxjc8f2PF7SZLI97g5eKAej8etTz7C7PwSPf3DDI9OsOpdQ0JQUOChvqaShvoq8nJdyLK2IOvrAQZHxhkbn0IIQWNdNVUVpZjNRnoHhuntHwHAbrdRV11OTVX5Qx/TX17x0tE9wNLyKgD5HjetB+rJ87h3LB9TVbxeH7fudbHqXcNkNtHSWEddTcWO5UOhMD19w4xPTBMMhlAMMrVVFbQ01W0bVywWY3F5lb6BUWZm53dcP1eOg7LSIoqL8nHYrIl12dZvOL1fp9NGXU0l1ZVlKFvqRGMxZuYW6B8aY3FxGZvNSk1lGXW1FckAfUrZ+DorikJhQS7nTh/beXF3QcbEunW3i0+vXGdqel5zGehxlXjuptGg0NJcT35eLrm5LtYDG9y808kfP7tKT98Qs/NLbGxugipwOmyUFhdw5uQRXnvpHA111UhCsOr18fX1e3x8+StkWebH77xCnseFYpC5eaeT//v3/wRArjuHS+dP8Zc/ySMnx7Gzb0dVGZ+Y5le//oiR8UlkSdJIlZe7K7HUWIz5pWV+/eEfGRqZINft5Bc/fXtHYkVjMeYXlvnH333C9TsdhCMRFEnm5ed/QGV5Ca4cR5rUicVizMzM8/EnX3L99n3S41IgCYHFYqYgP5eTR9t44bnT1FaXb5NcWr9L/OZ3f+LGnXYi4QgOu41XXzrPz997gxynXa+j6ZJYNMro+CQffnSZzu4BrFYLPzh1hL/66duUFBcgp0jvaDTKjTsdvP/3v8diMXPscMtTItZDjp+z84v0DYwyNPoAm92Ky+HQRb6WvmA0GPD51olEIsRiKr0Do/zq1x9x+Ytr+Pzr2OxWSgrzWQ9sMjI6Qf/QGCPjk2xsbvLz916nsryEYDDI1PQcnT2DyLLEhbPHCYcjqDGVmdkF7nf1oapgNZtBCM6fOU6zzYpBkbYNfHV1jfaufr6+eZ+ZuQUMBgWL2UQgsLPEBY2MgcAm/UPjdPYMUFjgYVGXdlsRCUcYGZvg5t0ubt3tSoSycnNdXDx/ksOtTWlSS1XBvx5gZHyCe519KIqmZgwGA6qqEgqHCQXDCEmit2+E9UCAH7/zCqXFhWmqOxyO0D84yvVb7dy+362FORUJl8vB2ROHOdBcpz1noEdI4lJ4cPgB9zv7kRUJn3+d0pIi3n3zRex2a3KM+jrf6+zDYbfiSXvF5t58EzsT62H14ikyQtBcV80LF89QmJ+bYLwkyeTn51JclE8oFOLG7XauXL2Nbz1AdWUZr754nubGOrzeNT75/Cp37vcw9mCKDz/6lOrKMspKi7QAN8m7bWsoKH41EAwyODzOl9duU1lRQo7Tvm24Q6MTXLl6m+VVL6puY6niUQeoeORTzyp7SOGNzSC37nUxt7AIQmi2DvBgcpp7HX0caKjZVU0LAQV5Hk4dO8iBpjoURca/HqCrZ5A77d0MjIzzm999QkV5Me+8/kIasTY2Nvj6xn1m5ua1ZEgEkWiM4bFJ7nX2UldbqRFr617qQfxoJMrw6AQffHSZ2qoyjh9txWQ0phcjvg/b1yYVj8wg3TP0F6dVVpTy+svP0VBToYdk9A0RAiEJlpZXmZyaZWF5BZPRwIGmWn7xs7cpLy0iuBmiqNCDx+1mamYOk9GQngSTfPckyS1OnZo27eWVVa58fYe3Xr2Ew2FLOwSsBzboHRiho6efUChEPFFLqI+450T6H+ouNFRjMVZX17h7v4eFpRVcdjtmq4nA+gZz80v09g+x5g9gte7yzgpVkOdxc+n8Kd567RJWi5nNYIibdzpY/x8b3LjTyfDoBP2Do2xsBrHbtANMLBZjYWmF+119LK94yXXlYDab8fn8TM/M09k9yBsvX8RmsWyfqJromsDGJt29Q3zw0WXKy4spLS5MU4nxTNxH5aXttJaP/2Iq0E51sozBoGwzMLWTWFRTYXoIJhyOsLGxiSzJ2O1Wzp85TnFhAaveNQRQXVWmTUyNL8DOsaF4ep8kJIKhMP1DowyOjJPncWG1WhLlJqZm6ejqZ2FpRdtYoW5paRek5XyxS4hHZTMUpm9wlPGJacLhCAdaaikvK6Z/cJSBoTGGRh4wOjaBx52TnmiYMiMhQFFkjEYDRqMBg0HhYEsDpcUFGBSZzc0QPv8Gm8EwdptWb2MzSGfPEFMz88RiKo311ZQUF9LdM8jg6ANGxieYnJ7DlePYJi3jU7FZrZiMRlbXfHz+1S2OHznIS8+fxZ3jTM5cjd/Umfox1McgVkpccM2/zoOpWRRFQZIlBFrKS77HjdlsxGGzkOdxY7Va2djYpLd/hN/+/lPWAxsU5Hlw2K20NNeh6NkNiiJr4l5svQtS8lJ1fqhCYDEbsdus+NcDXP7iOrVV5VRWlCCEIBKJ0jcwQntXH4qsUFhgZ35hmR0a33WaO4U+U0us+wNcuXabxeVVFEWmtbmOkycOEY1GGRgaY3pmnlt3u2hprt+RWFsNd1XVbr7l5VW8Pj+RSBSDQcFqMacd99fXA1y9dofl5VWMRgMHD9Rz+GAzgUCAodEHzMwtcre9m7qa7afluJlRVlxAZXkJXb2DzM4v8g8f/pGKsmKOtDUnBpd4UCZj/5h4DGIlVlult3+Yv33/t+S6cxJP2eQ47PzsvTdoqK3EYjVzpK2J44cPcLe9l4npWf7Prz7gi6u3aGms49DBRo4cOkBJUT45DnvKETnlLtlBlMffgZWX66a+ppLb97u4cu02L186S3FRPkajgeUVL3fbe+gbHKWkKJ+DBxr45PNrBEOhPa9TXH3tpAlisRjeNR/tnX34fOvYbBZqayo5d+ooY2OTXP7iOguLy9xt7+bdt1/aoqbVxNRCoSDzC0uMjE5gMhlZXvHyyefXGBgcIxqLUl5aRGVZMWaTMaEG13zr9A2OENjYJN/j5vDBJl5+/iyj41NcuXqHpaVVOroHeO3F89htVv3tO0kDQgC5bhenjx8iP8/NHz75kvbOXj6+/CUej4uy4sKUNXo8r6uScfwxvt+qYHZuAe+aTyOEvmgFeblcPHeS2upyTEYD588eR1VV/u43f+BOew/rgQ0GBscYGh7jj59dpaQon6OHDvDWa5c4eawNs8kI6I/mp+R4qVvGoAJFhfmcOXGY3v4R5ueXuNvRS31dJYX5eXT29HOvo4dIJEJhQR5NDTVc+fo2wVBoz5GPh71ay78eoKtvkInJWVRVpbmhhuaGaooL86itrqCyvITB4XFGxqfo6R/WpbgprUEVGBmf4r//zfv87/d/q0vaGOvr62xsBHHlOLlw5jjHj7YmHvb1rwfo7htkYmoWVYXmxloqyktxuXKoq6mgsqKEoZEHtHf1090/RK47R+tXNyzjc5JlQU1VGc2NtQyPTdLR3c/Hn3xJfW0VjudsaXbl46ToKBnzMbHRKi5XDhVlxdis5kQyX647B7crB0n3GtusFs6dOUZ5WTGDIw/o7Rvizv0eegdG8K8H6B0cZXJ6jlWvD6PRwPHDrXoH8XuLHbNMBeByOmhrbaC5qYa793u4ebeTc6ePkuN00D84xtDIBMVFBZw40kpxUT6SnvO115eUJHrdofyqd40btzpY869jNBpobqihsCCPaEylpLiA2upyhkYfsLLi5V57DyePtCaIlbDf9AiD3x9gMxhCoKX/KIpMdVUZL148w9uvXaK2ulx/HE5lecXL9Zvt+PwBjEYDjfVV5HtcRCJRrd+qcoZHH7C8vEpXzyAnUvpFFWmSyGw2caCpjp/98FWmp+eYml3gw48+xeN2EQlHt2VD7bg2u2B3VbgbJeP7LQStzfX87L3XqSgrSpwmDAYDVRUlKIqs5U7FVCxmM/U1lZSVFnHsUDMvXTrL0OgEd+53c/nza0xMzfLZVzc50FRLS1PdNtWTHErKT1VFUWQKCjwcaWumo7OPnt4h7nX24lsPaCemVS9nGqo5eqSFUCicZqdpTeghkVgMSWj2YeqpaDf+qTGVVa+Prr5BQsEQdocVi9nE7Nwi64FN1tb82tughWDFu8bNOx38xY/fxOVybp0FnlwXRw42U19bgcFg0B6wdTmpKCumtrqS4qI8TCaNGJFolNm5BW7f72YzuInLacdsMjEzt8iK18+aT+tXCMHyqperN+7y3tsvk+N06PNWSX2zkxCCXJeTc2eOcbe9l48vf8X9zj7+9PnXzM4tPtH7zHYn1qN8WaqKx53DgcY6GuoqtoUQVBVCoRALSyusrvpAgNNho6SokLKSIpoaamisq2JxaYXF5VXNNTE9h8+/vm1CIrVjAan/bcLtdHL6xCE++OhTZucW+eraXTq7B+noHsBgMFBXVUFjXTV9gyNpY1NVFZ8/wODwGBNTs9isFiorSqipLCPp3tBtoS32/prfT//gKOMTM4TCYdbXN/j0yxt0dA8gJEEsqj3/GI9Pjk9MMzo+Rb7Hnf6aASHwuHM4e+owL148g8Vi1shlMWG32bYZ3qteHz39I0zOzBEOR/H5N/jjp1e5dU9zkEZjUaZn5rU4ZExldGxS6zfPnfCBJV+dqf2WFYXS4kLefu0SQ6MP6Oge4POrtwgFU2zRxyDYExjvmjMQNZ7VuT0ovb6xweUvrvPF1VvIksThg0389N3XyXU7sdusVFWUkuvKSbgqtBRk/ZVFKU5RNaXbVD8MgMViorGummOHW7j8+TVu3e1EliW8a37qaio5dqQFjztHyy5NQHu/w+bmJl9eu8PHn3yJw2nn+fMnKfrJWxiNWvQgGo0ihMBisWBK2EewsLjC/Y5eVr0+YqrKZjBEd99w2iEvvhwxFVbX/Hx94x71tRXke3KTo1BVDEYDHo+byopSrJaHvzh4fn6J2/e68fsDqHq/7d0D206wqr6Wa/4AHd0DNDVU48px6CZrmrcQAJPJyKG2Zl578Tzzi8uMT0xre7rFn5cJMn5rcmq5xeUV7nf1srS8krBfJCFwOuzauxUkmfmFJT7/8ib+9QD9Q6MgBEcPNWMyGukfHKVvcITNYBC73Uq+JxeHXXNNJMxbNVVxJDuPfy+EwJXj4Lmzx7l9t4uhsQktvCHLtLXUc/xwi3bnx9OYE/XAaDLi96/T3jOAGlPx+fwoigFXjoPrt9pZWFxBliSKC/LIy3WDqsXopqbnuHmvi2AwSK7LycXzJxOEiS9fNBplfGKK67c7CQQ2uH77Pq+9dB5P6iNlYqe57YxQKMz45Az3O3sJh8IU5ns4f/oYHo8r0S+QiAlevXGPQGCDazfvcvHcCZx2+5ae1ITmEWhr+MoL5xgZn8S75mNxcSURa3ycc2HGb01OLTcwOMb7//B7bCmeZYOi0FBfzU/eeZWa6jJOHT/EnfZuvrp+j8Hhcf7mb3/NtaYaTEYjw2MTjI5NoSgKJ4+2cfJ4m/bv5cRy0scj0uRXcowpxr3FZKL1QAMVZcVMTc8RDIfIz3PT3FBDSXGB7hxNShEhSBwsDrU2c6Chlvbufjp7B1lYXMHhsPFgcgaffx2n3U7LgToqK4pBgHfNR//wGCNjkwghaGmq5Zd/+S4NtVUkXrgkBNFIhGu32pmdX6J/cJSxB1P0D41SWpzyXz3SJvVwdbO65mNkbILZ+UUkWaKluY5f/uJd6mrKk85kPVTz5bW7jD2YZnxymr6BESamZikrKSR52k5ZR31tFFmmvLSIN166wMTkDFeu3SUcCmdAiHRkrAoNBhmz2YTNambN76ezdzAtAmIyGAlHo6z5/br6a+RHb78CqqBvYISVNS+Xv7gOaP88wONx0dJUxw/ffJHjR1qQZQlZkjAajFgtZmRFwmQ0JJ5B1Axczbtu0n07siLrWRKHmZyZY3Z+kUMHmzjU2ojJaCQcDiNJAqvFTDAUwmgwIoSWu3TiWCs/ffdVzGYTI2MTzMwtMDkzh9lkoq66grbWRp6/cJqykiJAC8IPj4wjyxK5uS5OnThCZXkJeZ70h1tVVfOIHz/cyuz8IuFIlO7eIQ61NiErMmaTCavNjMVs0l7J9IgNnJ9fYmRsAkWRcbtzOHboAOWlReTlupNKRvfxNdZXcexIC941H+FIlMHhMZobapAVGZPJhM1qwWw2JZ4yj8NkMnK4rZnnL5xmdn6J0QeTWK3mNDNgr8iYWCVFBXouk2ub1lQBg6xQXVGK1aJJMYfdxqXzJ7HZLFy5epuRsUmmZ+dRVZU8j5u2A/W8dOkHHG5rSjjzTCYj5boXWJYlSooKMRk1EpWVaO4DgLqaioQxbLNauHD2OHPzi4xNTPH8+VM0N9YiyxLRqITL6eBQayM+f4C6morEO+cL8nL54ZsvUVSYz/+7/BWDI+NsboYozPdw6kQbL1w4TX1dVcL+CUcimEwmDrU24bBbOX28jRxnemoMaBKxuDCP535wnIWlZYLBEBazCVQVp8NOQ10l3jUfNVXleHJdD39SSVUJhkIYFIW2lkacDjunjh/CpfebemMLBMWF+Vw6d4J1f4BQJMLmZpDNYBB3jpOmhhpUVaWpvgZ3jjPh2I6POcdp59L5k3i9Pm7c7cBisVBfU5kpTbIPU2SxP/iO57xn8U0h+8/Gt+Bpzen7vjZZVZjFviCrCrPYF2SJlcW+IEusLPYFWWJlsS/IEiuLfUGWWFnsC7LEymJfsJ1YT+jV2sujVU+l/afmfcugob0UfZJx7bHurpmtT2MMe+loD/j/VoRW3QbbZD4AAAAASUVORK5CYII=" alt="ESIMJapan" class="provider-logo"></td>
+        <td>409.6 ▼ 71.4 ▲ (5G where available)</td>
+        <td>3-30 days 1GB–Unlimited</td>
+        <td><strong>3 days with 2GB per day for A$13.87</strong> – Unlimited 5G no speed cap A$70.94 (15 days)</td>
+        <td><a href="https://esimjapan.com/" target="_blank" rel="noopener">View offer</a></td>
+      </tr>
+      <tr>
+        <td><img src="data:image/jpeg;base64,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" alt="Sakura Mobile" class="provider-logo"></td>
+        <td>115.6 ▼ 14.3 ▲ (4G)</td>
+        <td>1-90 days 1GB–Unlimited</td>
+        <td>Unlimited <strong>A$15.86 – A$250.59</strong> with easy top-ups</td>
+        <td><a href="https://www.sakuramobile.jp/lp/?i=travel-sim" target="_blank" rel="noopener">View offer</a></td>
+      </tr>
+      <tr>
+        <td><img src="data:image/png;base64,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" alt="Sim Local" class="provider-logo"></td>
+        <td>92.6 ▼ 6.8 ▲ (4G)</td>
+        <td>7 days Unlimited data</td>
+        <td><strong>Unlimited data / 7 days A$24.85</strong>. 20% discount with CHEAPO20</td>
+        <td><a href="https://www.simlocal.com/esim/au/japan-esim-unlimited-data-for-7-days/KDD-003-KDDI" target="_blank" rel="noopener">View offer</a></td>
+      </tr>
+      <tr>
+        <td><img src="data:image/png;base64,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" alt="Airalo" class="provider-logo"></td>
+        <td>39.6 ▼ 49.2 ▲ (4G)</td>
+        <td>7-30 days 1-20GB</td>
+        <td><strong>20GB / 30 days A$40.10</strong>. 10% discount for readers</td>
+        <td><a href="https://www.airalo.com/japan-esim?" target="_blank" rel="noopener">View offer</a></td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="text-align:center; margin-top:20px;">
+    Source: <a href="https://tokyocheapo.com/business/internet/esim-japan-travel/" target="_blank" rel="noopener">Tokyo Cheapo – Best Japan eSIMs</a>
+  </p>
+
 <script>
-(function() {
-  function enhanceNotes() {
-    var cells = document.querySelectorAll('td[data-label="Notes"]');
-    cells.forEach(function(td) {
-      if (td.dataset.enhanced === "1") return;
-      var text = td.textContent.trim();
-      if (!text) return;
-      td.innerHTML = '<div class="notes-clamp"></div><button class="notes-toggle" aria-expanded="false" type="button">Show more</button>';
-      td.querySelector('.notes-clamp').textContent = text;
-      td.dataset.enhanced = "1";
-      var btn = td.querySelector('.notes-toggle');
-      btn.addEventListener('click', function() {
-        var expanded = td.classList.toggle('notes-expanded');
-        btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
-        btn.textContent = expanded ? 'Show less' : 'Show more';
+(function(){
+  if(!('serviceWorker' in navigator)) return;
+  function showToast(){ var el=document.getElementById('sw-update-toast'); if(el) el.style.display='block'; }
+  function hideToast(){ var el=document.getElementById('sw-update-toast'); if(el) el.style.display='none'; }
+
+  window.addEventListener('load', function(){
+    navigator.serviceWorker.register('/SP-2025-eSIM/service-worker.js', { scope: '/SP-2025-eSIM/' }).then(function(reg){
+      document.addEventListener('visibilitychange', function(){ if(!document.hidden) reg.update(); });
+      if (reg.waiting) showToast();
+      reg.addEventListener('updatefound', function(){
+        var nw = reg.installing; if(!nw) return;
+        nw.addEventListener('statechange', function(){
+          if(nw.state==='installed' && navigator.serviceWorker.controller) showToast();
+        });
       });
+      var btnNow=document.getElementById('sw-update-now'); if(btnNow) btnNow.addEventListener('click', function(){ if(reg.waiting) reg.waiting.postMessage({type:'SKIP_WAITING'}); });
+      var btnLater=document.getElementById('sw-update-later'); if(btnLater) btnLater.addEventListener('click', hideToast);
+      navigator.serviceWorker.addEventListener('controllerchange', function(){ window.location.reload(); });
     });
-  }
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', enhanceNotes);
-  } else {
-    enhanceNotes();
-  }
+  });
 })();
 </script>
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
-    navigator.serviceWorker.register('/SP-2025-transport/service-worker.js')
-      .catch(function(err){ console.warn('SW registration failed:', err); });
-  });
-}
-</script>
+
 
 <script>
   if ('serviceWorker' in navigator) {
