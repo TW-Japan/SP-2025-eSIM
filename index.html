@@ -151,5 +151,32 @@
 })();
 </script>
 
+
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', async () => {
+      try {
+        const reg = await navigator.serviceWorker.register('/SP-2025-eSIM/service-worker.js');
+        reg.update();
+        setInterval(() => reg.update(), 30 * 60 * 1000);
+        navigator.serviceWorker.addEventListener('message', (event) => {
+          if (event.data && event.data.type === 'NEW_VERSION_ACTIVATED') {
+            location.reload();
+          }
+        });
+      } catch (e) { console.error('SW registration failed:', e); }
+    });
+  }
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a[href]');
+    if (!a) return;
+    const url = new URL(a.href, location.href);
+    const sameOrigin = url.origin === location.origin && url.pathname.startsWith('/SP-2025-eSIM/');
+    if (!sameOrigin && !navigator.onLine) {
+      e.preventDefault();
+      alert('You are offline. This link needs an internet connection.');
+    }
+  });
+</script>
 </body>
 </html>
