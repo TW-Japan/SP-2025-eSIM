@@ -43,8 +43,25 @@
       width: auto;
     }
   </style>
+
+<style>
+#sw-update-toast{position:fixed;left:50%;transform:translateX(-50%);bottom:16px;
+background:#111;color:#fff;border-radius:10px;padding:10px 14px;display:none;
+box-shadow:0 6px 18px rgba(0,0,0,.25);z-index:9999;font:14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Arial;}
+#sw-update-toast button{margin-left:10px;border:0;border-radius:8px;padding:6px 10px;cursor:pointer}
+#sw-update-toast .btn-primary{background:#0b3d91;color:#fff}
+#sw-update-toast .btn-secondary{background:#444;color:#fff}
+</style>
+
 </head>
 <body>
+
+<div id="sw-update-toast" role="status" aria-live="polite">
+  <span>Update available.</span>
+  <button class="btn-secondary" id="sw-update-later">Later</button>
+  <button class="btn-primary" id="sw-update-now">Update now</button>
+</div>
+
   <h1>Japan eSIM Providers – Comparison Table</h1>
   <table>
     <thead>
@@ -118,5 +135,57 @@
   <p style="text-align:center; margin-top:20px;">
     Source: <a href="https://tokyocheapo.com/business/internet/esim-japan-travel/" target="_blank" rel="noopener">Tokyo Cheapo – Best Japan eSIMs</a>
   </p>
+
+<script>
+(function(){
+  if(!('serviceWorker' in navigator)) return;
+
+  function showToast(){
+    var el = document.getElementById('sw-update-toast');
+    if(el) el.style.display = 'block';
+  }
+  function hideToast(){
+    var el = document.getElementById('sw-update-toast');
+    if(el) el.style.display = 'none';
+  }
+
+  window.addEventListener('load', function(){
+    navigator.serviceWorker.register('/SP-2025-eSIM/service-worker.js').then(function(reg){
+      // Keep registration fresh while visible
+      document.addEventListener('visibilitychange', function(){ if(!document.hidden) reg.update(); });
+
+      // Prompt if a worker is already waiting
+      if (reg.waiting) showToast();
+
+      // Show toast when a new worker installs
+      reg.addEventListener('updatefound', function(){
+        var newWorker = reg.installing;
+        if(!newWorker) return;
+        newWorker.addEventListener('statechange', function(){
+          if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+            showToast();
+          }
+        });
+      });
+
+      // Buttons
+      var btnNow = document.getElementById('sw-update-now');
+      var btnLater = document.getElementById('sw-update-later');
+      if (btnNow) btnNow.addEventListener('click', function(){
+        if (reg.waiting) reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+      });
+      if (btnLater) btnLater.addEventListener('click', hideToast);
+
+      // Reload when the controller changes (new SW activates)
+      navigator.serviceWorker.addEventListener('controllerchange', function(){
+        window.location.reload();
+      });
+    }).catch(function(e){
+      console.error('SW registration failed:', e);
+    });
+  });
+})();
+</script>
+
 </body>
 </html>

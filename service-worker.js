@@ -1,32 +1,32 @@
-/* Service Worker for SP-2025-transport (cache-refresh) */
-const CACHE_NAME = 'sp-2025-transport-v2';
-const OFFLINE_URL = '/SP-2025-transport/index.html';
+/* Service Worker for SP-2025-eSIM (network-first HTML, cache-first assets) */
+const CACHE_VERSION = 'v2025-08-29-1';
+const CACHE_NAME = `sp-2025-esim-${CACHE_VERSION}`;
+const BASE = '/SP-2025-eSIM';
 
-const URLS_TO_CACHE = [
-  '/SP-2025-transport/',
-  '/SP-2025-transport/index.html',
-  '/SP-2025-transport/assets/manifest.json',
-  '/SP-2025-transport/assets/icons/icon-192x192.png',
-  '/SP-2025-transport/assets/icons/icon-512x512.png'
+const PRECACHE_URLS = [
+  `${BASE}/`,
+  `${BASE}/index.html`,
+  `${BASE}/assets/manifest.json`,
+  `${BASE}/assets/icons/icon-192x192.png`,
+  `${BASE}/assets/icons/icon-512x512.png`,
 ];
 
 self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(URLS_TO_CACHE))
-  );
+  event.waitUntil((async () => {
+    const cache = await caches.open(CACHE_NAME);
+    await cache.addAll(PRECACHE_URLS);
+  })());
   self.skipWaiting();
 });
 
 self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    caches.keys().then((keys) => Promise.all(
-      keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k))
-    ))
-  );
-  self.clients.claim();
+  event.waitUntil((async () => {
+    const keys = await caches.keys();
+    await Promise.all(keys.filter(k => !k.endsWith(CACHE_VERSION)).map(k => caches.delete(k)));
+    await self.clients.claim();
+  })());
 });
 
-// Optional: allow pages to tell the SW to activate immediately
 self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
@@ -38,42 +38,41 @@ self.addEventListener('fetch', (event) => {
   if (req.method !== 'GET') return;
 
   const url = new URL(req.url);
-  const isSameOrigin = url.origin === self.location.origin;
+  if (url.origin !== self.location.origin) return;
 
-  // Network-First for HTML/navigations to avoid stale index from cache
   const isNavigation = req.mode === 'navigate' || req.destination === 'document';
-  const isIndex =
-    (isSameOrigin && (
-      url.pathname === '/SP-2025-transport/' ||
-      url.pathname.endsWith('/SP-2025-transport/index.html')
-    ));
+  const isIndex = url.pathname === `${BASE}/` || url.pathname.endsWith(`${BASE}/index.html`);
 
+  // Network-first for navigations/HTML
   if (isNavigation || isIndex) {
-    event.respondWith(
-      fetch(req)
-        .then((res) => {
-          const resClone = res.clone();
-          caches.open(CACHE_NAME).then((c) => c.put(req, resClone));
-          return res;
-        })
-        .catch(() =>
-          caches.match(req).then((cached) => cached || caches.match(OFFLINE_URL))
-        )
-    );
+    event.respondWith((async () => {
+      try {
+        const fresh = await fetch(req, { cache: 'no-store' });
+        const cache = await caches.open(CACHE_NAME);
+        cache.put(req, fresh.clone());
+        return fresh;
+      } catch (err) {
+        const cache = await caches.open(CACHE_NAME);
+        return (await cache.match(req)) || (await cache.match(`${BASE}/index.html`));
+      }
+    })());
     return;
   }
 
-  // Stale-While-Revalidate for other same-origin assets
-  if (isSameOrigin) {
-    event.respondWith(
-      caches.match(req).then((cached) => {
-        const fetchPromise = fetch(req).then((res) => {
-          const resClone = res.clone();
-          caches.open(CACHE_NAME).then((c) => c.put(req, resClone));
-          return res;
-        }).catch(() => cached);
-        return cached || fetchPromise;
-      })
-    );
-  }
+  // Cache-first with background refresh for other same-origin assets
+  event.respondWith((async () => {
+    const cache = await caches.open(CACHE_NAME);
+    const cached = await cache.match(req);
+    if (cached) {
+      fetch(req).then(resp => { if (resp && resp.ok) cache.put(req, resp.clone()); }).catch(() => {});
+      return cached;
+    }
+    try {
+      const resp = await fetch(req);
+      if (resp && resp.ok) cache.put(req, resp.clone());
+      return resp;
+    } catch (err) {
+      return cached || Response.error();
+    }
+  })());
 });
