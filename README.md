@@ -1,4 +1,4 @@
-# 📱 Japan – Steph and Sarah’s eSIM Comparison (May 2025)
+# 📱 Japan – Steph and Sarah’s eSIM Comparison (2025)
 
 This repository hosts a **mobile-friendly comparison table** of Japan eSIM providers for Steph and Sarah’s 2025 trip.  
 It includes provider logos, package details, speeds, highlights, and direct links to buy, optimised for both desktop and mobile.
